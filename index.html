@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PG Management – Pure CSS Version</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+:root{
+  --accent:#155bd6;
+  --bg:#eef2ff;
+  --muted:#6b7280;
+  --gradient-bg: linear-gradient(135deg,#dbeafe,#eff6ff,#ffffff);
+  --glass-bg: rgba(255,255,255,0.70);
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial;}
+body{
+  background:var(--gradient-bg);
+  background-size:400% 400%;
+  animation:bgMove 12s ease infinite;
+  color:#111;
+  display:flex;
+}
+@keyframes bgMove {
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* SIDEBAR */
+.sidebar{
+  position:fixed;left:0;top:0;width:240px;height:100vh;
+  background: linear-gradient(135deg, #155bd6, #1e3a8a);
+  backdrop-filter:blur(18px);
+  border-right:2px solid rgba(255,255,255,0.25);
+  padding:22px;color:white;
+  display:flex;flex-direction:column;gap:10px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.15);
+}
+.sidebar h2{font-size:24px;margin-bottom:14px;}
+.nav-link{
+  color:white;text-decoration:none;padding:10px;border-radius:8px;
+  display:block;font-size:16px;transition:.3s;
+  backdrop-filter:blur(4px);
+}:.3s;
+}
+.nav-link:hover{
+  background:rgba(255,255,255,0.28);
+  box-shadow:0 4px 10px rgba(255,255,255,0.15);
+}{background:rgba(255,255,255,0.18);} 
+.nav-link.active{background:#0d47c3;font-weight:600;}
+
+/* CONTENT */
+.content{margin-left:260px;padding:80px 40px;width:100%;}
+.topbar{
+  position:fixed;left:260px;top:0;right:0;height:60px;
+  background:var(--glass-bg);
+  backdrop-filter:blur(14px);
+  box-shadow:0 4px 20px rgba(0,0,0,0.12);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 25px;z-index:999;
+}
+}
+.topbar h1{font-size:22px;font-weight:600;}
+.topbar i{font-size:22px;color:#333;}
+
+/* PAGE VISIBILITY USING :TARGET */
+.page{display:none;opacity:0;transform:translateY(20px);transition:.4s;}
+.page:target{display:block;opacity:1;transform:translateY(0);} 
+
+/* Default page */
+#auth:target ~ .content #auth,
+body:not(:has(:target)) #auth{display:block;opacity:1;transform:translateY(0);} 
+
+/* CARDS */
+.card{
+  background:var(--glass-bg);
+  backdrop-filter:blur(10px);
+  padding:22px;border-radius:16px;
+  border:1px solid rgba(255,255,255,0.4);
+  box-shadow:0 8px 28px rgba(0,0,0,0.15);
+  margin-bottom:20px;
+  transition:.3s;
+}:20px;transition:.3s;border:1px solid #e5e7eb;
+}
+.card:hover{transform:translateY(-3px);}
+
+.stat-box{display:flex;gap:14px;flex-wrap:wrap;}
+.stat{flex:1;min-width:180px;background:#fff;padding:14px;border-radius:10px;
+      box-shadow:0 2px 8px rgba(0,0,0,0.06);}
+
+textarea,input,select{width:100%;padding:10px;border-radius:8px;
+       border:1px solid #dfe3ea;margin-top:10px;}
+button{
+  background:linear-gradient(135deg,#2563eb,#1e40af);
+  border:none;color:white;padding:12px 16px;
+  border-radius:10px;margin-top:10px;cursor:pointer;transition:.3s;
+  box-shadow:0 6px 18px rgba(37,99,235,0.35);
+}:.25s;
+}
+button:hover{
+  transform:translateY(-3px) scale(1.05);
+  box-shadow:0 10px 25px rgba(37,99,235,0.5);
+}{transform:scale(1.03);background:#0d47c3;}
+
+/* OWNER ID SHOW/HIDE PURE CSS */
+#role-select option[value="Owner"]:checked ~ #owner-id-box{display:none;}
+
+/* MOBILE */
+@media(max-width:650px){
+  .sidebar{left:-240px;position:absolute;transition:.3s;}
+  #menu-toggle:checked ~ .sidebar{left:0;}
+  .topbar{left:0;}
+  .content{margin-left:0;padding-top:80px;}
+  .menu-btn{position:fixed;top:15px;left:15px;font-size:22px;
+    background:var(--accent);color:white;padding:8px 12px;border-radius:6px;z-index:1000;}
+}
+  /* DARK MODE TOGGLE */
+  #dark-toggle{display:none;}
+  #dark-toggle:checked ~ body{
+    --bg:#0f172a;
+    --accent:#1e40af;
+    --muted:#94a3b8;
+    color:white !important;
+  }
+  #dark-toggle:checked ~ body .card{
+    background:rgba(255,255,255,0.08) !important;
+    backdrop-filter:blur(8px);
+    border-color:rgba(255,255,255,0.2) !important;
+  }
+  #dark-toggle:checked ~ body .sidebar{
+    background:#1e3a8a !important;
+  }
+  #dark-toggle:checked ~ body .topbar{
+    background:rgba(255,255,255,0.08) !important;
+    backdrop-filter:blur(8px);
+  }
+
+  /* GLASSMORPHISM CARDS */
+  .card{
+    background:rgba(255,255,255,0.65);
+    backdrop-filter:blur(6px);
+  }
+
+  /* GRADIENT BUTTONS */
+  button{
+    background:linear-gradient(135deg,#155bd6,#1e40af);
+  }
+
+  /* BADGES */
+  .badge{padding:4px 10px;border-radius:6px;font-size:12px;color:white;display:inline-block;margin-top:6px;}
+  .paid{background:#16a34a;}
+  .pending{background:#facc15;color:#000;}
+  .overdue{background:#dc2626;}
+
+  /* SIDEBAR ACTIVE LINK FIX */
+  .nav-link[href*="auth"]:target,
+  #auth:target ~ .sidebar .nav-link[href="#auth"]{background:#0d47c3;}
+  /* Additional pages handled via :target */
+
+  /* PAGE ANIMATION */
+  .page{animation:fadeSlide .4s ease forwards;}
+  @keyframes fadeSlide{
+    from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+
+  /* SHOW OWNER-ID ONLY FOR TENANT */
+  .role-box:has(#role-select option:checked[value="Owner"]) #owner-id-box{display:none;}
+  /* SHOW OWNER ID ONLY IF ROLE = TENANT */
+  .role-select:has(option[value="Owner"]:checked) ~ .owner-id-box{display:none;}
+  .owner-id-box{margin-top:10px;}
+  /* FINAL FIX: SHOW OWNER ID ONLY IF ROLE = TENANT */
+  .role-select option[value="Owner"]:checked ~ .owner-id-box,
+  .role-select:has(option[value="Owner"]:checked) ~ .owner-id-box {
+    display:none;
+  }
+</style>
+</head>
+<body>
+
+<input type="checkbox" id="menu-toggle" hidden>
+<label for="menu-toggle" class="menu-btn">☰</label>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <h2>PG Panel</h2>
+  <a href="#auth" class="nav-link"><i class="fa-solid fa-right-to-bracket"></i> Login</a>
+  <a href="#tenant" class="nav-link"><i class="fa-solid fa-user"></i> Tenant</a>
+  <a href="#owner" class="nav-link"><i class="fa-solid fa-user-tie"></i> Owner</a>
+  <a href="#details" class="nav-link"><i class="fa-solid fa-list"></i> Tenant Details</a>
+  <a href="#rooms" class="nav-link"><i class="fa-solid fa-door-open"></i> Rooms</a>
+  <a href="#mess" class="nav-link"><i class="fa-solid fa-utensils"></i> Mess</a>
+  <a href="#payments" class="nav-link"><i class="fa-solid fa-money-bill"></i> Payments</a>
+  <a href="#complaints" class="nav-link"><i class="fa-solid fa-triangle-exclamation"></i> Complaints</a>
+</div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <h1>PG Management</h1>
+  <div>
+    <i class="fa-solid fa-bell"></i>
+    <i class="fa-solid fa-user-circle"></i>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- AUTH PAGE -->
+<section id="auth" class="page">
+  <div class="card">
+    <h1>Sign Up / Login</h1>
+
+    <label>Role</label>
+    <select id="role-select" class="role-select">
+      <option value="Tenant" selected>Tenant</option>
+      <option value="Owner">Owner</option>
+    </select>
+
+    <!-- TENANT‑ONLY OWNER ID FIELD -->
+    <div class="owner-id-box">
+      <label>Owner ID</label>
+      <input placeholder="Enter Owner ID (Tenant only)">
+    </div>
+
+      <label>Name</label>
+    <input placeholder="Full Name">
+
+    <label>Email</label>
+    <input type="email" placeholder="you@example.com">
+
+    <label>Password</label>
+    <input type="password" placeholder="password">
+
+    <button>Sign Up</button>
+    <button style="background:#0ea5a0">Login</button>
+  </div>
+</section>
+
+<!-- TENANT PAGE -->
+<section id="tenant" class="page">
+  <div class="card"><h1>Tenant Dashboard</h1></div>
+
+  <!-- QUICK ACTIONS CARD ADDED -->
+  <div class="card" style="border-left:5px solid #155bd6;">
+    <h2>Quick Actions</h2>
+    <button style="width:100%;margin-top:12px;">Pay Rent</button>
+    <button style="width:100%;margin-top:12px;background:#4f46e5;">Pay Advance</button>
+    <button style="width:100%;margin-top:12px;background:#059669;">Use / Unlock Mess</button>
+    <button style="width:100%;margin-top:12px;background:#dc2626;">Complaint</button>
+  </div>
+
+  <div class="stat-box"><h1>Tenant Dashboard</h1></div>
+  <div class="stat-box">
+    <div class="stat"><strong>Month Ends:</strong><br>31 Jan 2025</div>
+    <div class="stat"><strong>Security Paid:</strong><br>₹10,000</div>
+    <div class="stat"><strong>Mess:</strong><br>Not Using</div>
+  </div>
+  <div class="card">
+    <h2>Feedback</h2>
+    <textarea rows="3"></textarea>
+    <button>Submit</button>
+  </div>
+</section>
+
+<!-- OWNER PAGE -->
+<section id="owner" class="page">
+  <div class="card"><h1>Owner Dashboard</h1></div>
+
+  <!-- AUTO-GENERATED OWNER ID CARD WITH CSS QR-CODE -->
+  <div class="card" style="border-left:5px solid #155bd6;">
+    <h2><i class="fa-solid fa-id-card"></i> Owner ID</h2>
+    <p style="margin-top:8px;font-size:18px;font-weight:600;">PG-OWN-1024</p>
+
+    <!-- PURE CSS QR CODE (non-scannable, visual only) -->
+    <div class="qr-box">
+      <div class="qr"></div>
+    </div>
+
+    <span class="badge paid">Generated Automatically</span>
+  </div>
+
+  <style>
+    .qr-box{margin-top:14px;padding:12px;background:white;border-radius:10px;display:inline-block;}
+    .qr{
+      width:80px;height:80px;
+      background:
+        linear-gradient(#000 0 0) 0 0/20px 20px,
+        linear-gradient(#000 0 0) 20px 20px/20px 20px,
+        linear-gradient(#000 0 0) 40px 0/20px 20px,
+        linear-gradient(#000 0 0) 60px 20px/20px 20px,
+        linear-gradient(#000 0 0) 0 40px/20px 20px,
+        linear-gradient(#000 0 0) 40px 40px/20px 20px,
+        linear-gradient(#000 0 0) 20px 60px/20px 20px,
+        linear-gradient(#000 0 0) 60px 60px/20px 20px;
+      background-repeat:no-repeat;
+    }
+  </style>
+
+  <div class="stat-box">
+    <div class="stat"><strong>Total Tenants:</strong><br>12</div>
+    <div class="stat"><strong>Rent Paid:</strong><br>7</div>
+    <div class="stat"><strong>Mess Users:</strong><br>5</div>
+    <div class="stat"><strong>Security:</strong><br>₹1,20,000</div>
+  </div>
+</section>
+
+<!-- TENANT DETAILS -->
+<section id="details" class="page">
+  <div class="card"><h1>Tenant Details</h1></div>
+
+  <div class="card"><strong>Rahul</strong><br>Rent: Paid<br>Advance: No<br>Security: ₹10,000<br>Mess: Using</div>
+  <div class="card"><strong>Amit</strong><br>Rent: Pending<br>Advance: No<br>Security: ₹8,000<br>Mess: Not Using</div>
+  <div class="card"><strong>Priya</strong><br>Rent: Paid<br>Advance: Yes<br>Security: ₹9,000<br>Mess: Using</div>
+  <div class="card"><strong>Karan</strong><br>Rent: Pending<br>Advance: No<br>Security: ₹7,000<br>Mess: Using</div>
+  <div class="card"><strong>Riya</strong><br>Rent: Paid<br>Advance: Yes<br>Security: ₹10,000<br>Mess: Not Using</div>
+  <div class="card"><strong>Mohit</strong><br>Rent: Paid<br>Advance: No<br>Security: ₹6,000<br>Mess: Using</div>
+  <div class="card"><strong>Simran</strong><br>Rent: Pending<br>Advance: No<br>Security: ₹8,500<br>Mess: Using</div>
+  <div class="card"><strong>Deepak</strong><br>Rent: Paid<br>Advance: Yes<br>Security: ₹9,500<br>Mess: Not Using</div>
+  <div class="card"><strong>Arjun</strong><br>Rent: Pending<br>Advance: No<br>Security: ₹6,500<br>Mess: Using</div>
+  <div class="card"><strong>Meera</strong><br>Rent: Paid<br>Advance: Yes<br>Security: ₹7,500<br>Mess: Not Using</div>
+  <div class="card"><strong>Sachin</strong><br>Rent: Pending<br>Advance: No<br>Security: ₹10,000<br>Mess: Using</div>
+  <div class="card"><strong>Neha</strong><br>Rent: Paid<br>Advance: Yes<br>Security: ₹8,000<br>Mess: Using</div>
+</section>
+
+<!-- ROOMS -->
+<section id="rooms" class="page">
+  <div class="card"><h1>Room Allocation</h1></div>
+
+  <div class="card"><strong>Room 101</strong><br>Rahul – Lower Bed<br>Amit – Upper Bed</div>
+  <div class="card"><strong>Room 102</strong><br>Priya – Lower Bed<br>Karan – Upper Bed</div>
+  <div class="card"><strong>Room 103</strong><br>Riya – Lower Bed<br>Mohit – Upper Bed</div>
+  <div class="card"><strong>Room 104</strong><br>Simran – Lower Bed<br>Deepak – Upper Bed</div>
+  <div class="card"><strong>Room 105</strong><br>Arjun – Lower Bed<br>Meera – Upper Bed</div>
+  <div class="card"><strong>Room 106</strong><br>Sachin – Lower Bed<br>Neha – Upper Bed</div>
+  <div class="card"><strong>Room 107</strong><br><em>Currently Unallocated</em></div>
+  <div class="card"><strong>Room 108</strong><br><em>Currently Unallocated</em></div>
+  <div class="card"><strong>Room 109</strong><br><em>Currently Unallocated</em></div>
+  <div class="card"><strong>Room 110</strong><br><em>Currently Unallocated</em></div>
+</section>
+
+<!-- MESS -->
+<section id="mess" class="page">
+  <div class="card"><h1>Mess Menu</h1></div>
+  <div class="card"><strong>Monday</strong><br>
+    <ul>
+        <li><strong>Breakfast-</strong>Poha</li>
+        <li><strong>Lunch-</strong>Mix veg/Dal/Rice</li>
+        <li><strong>Dinner-</strong>chole bhature</li>
+    </ul></div>
+  <div class="card"><strong>Tuesday</strong><br>
+<ul>
+        <li><strong>Breakfast-</strong>Sandwich</li>
+        <li><strong>Lunch-</strong>soya chap/rumali roti</li>
+        <li><strong>Dinner-</strong>Sahi panner/Naan</li>
+    </ul></div>
+  <div class="card"><strong>wensday</strong><br>
+<ul>
+        <li><strong>Breakfast-</strong>Dosa</li>
+        <li><strong>Lunch-</strong>Mix veg/Dal/Rice</li>
+        <li><strong>Dinner-</strong>chole bhature</li>
+    </ul></div>
+  <div class="card"><strong>Thrusday</strong><br>
+<ul>
+        <li><strong>Breakfast-</strong>Utpam</li>
+        <li><strong>Lunch-</strong> Butter Panner/Dal/Rice</li>
+        <li><strong>Dinner-</strong>Dal Makhani/rice/roti</li>
+    </ul></div>
+  <div class="card"><strong>Friday</strong><br>
+<ul>
+        <li><strong>Breakfast-</strong>Idli/sambhar</li>
+        <li><strong>Lunch-</strong>Lady finger/Dal/Rice</li>
+        <li><strong>Dinner-</strong>Aloo puri</li>
+    </ul></div>
+  <div class="card"><strong>Saturday</strong><br>
+<ul>
+        <li><strong>Breakfast-</strong>Aloo paratha</li>
+        <li><strong>Lunch-</strong>Besan curry/Dal/Rice</li>
+        <li><strong>Dinner-</strong>chole bhature</li>
+    </ul></div>
+  <div class="card"><strong>Sunday</strong><br>
+<ul>
+        <li><strong>Breakfast-</strong>Samosa/Pakora</li>
+        <li><strong>Lunch-</strong>Mix/Dal/Rice</li>
+        <li><strong>Dinner-</strong>saag /makke ki roti</li>
+    </ul></div>
+</section>
+
+<!-- PAYMENTS -->
+<section id="payments" class="page">
+  <div class="card"><h1>Payment History</h1></div>
+  <div class="card"><strong>Rahul</strong><br>Jan: Paid<br>Dec: Paid<br>Nov: Paid</div>
+  <div class="card"><strong>Amit</strong><br>Jan: Pending<br>Dec: Paid</div>
+</section>
+
+<!-- COMPLAINTS -->
+<section id="complaints" class="page">
+  <div class="card"><h1>Complaints</h1></div>
+  <div class="card"><strong>Water Issue</strong><br>By Amit<br>Status: Pending</div>
+  <div class="card"><strong>Fan Not Working</strong><br>By Rahul<br>Status: Resolved</div>
+</section>
+
+</div>
+</body>
+</html>
